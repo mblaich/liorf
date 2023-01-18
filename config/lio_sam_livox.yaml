@@ -2,7 +2,7 @@ liorf:
 
   # Topics
   pointCloudTopic: "points_raw"               # Point cloud data
-  imuTopic: "imu_raw"                         # IMU data
+  imuTopic: "imu/data"                         # IMU data
   odomTopic: "odometry/imu"                   # IMU pre-preintegration odometry, same frequency as IMU
   gpsTopic: "odometry/gpsz"                   # GPS odometry topic from navsat, see module_navsat.launch file
 
@@ -19,7 +19,7 @@ liorf:
   poseCovThreshold: 25.0                      # m^2, threshold for using GPS data
   
   # Export settings
-  savePCD: false                              # https://github.com/TixiaoShan/LIO-SAM/issues/3
+  savePCD: true                              # https://github.com/TixiaoShan/LIO-SAM/issues/3
   savePCDDirectory: "/Downloads/LOAM/"        # in your home folder, starts and ends with "/". Warning: the code deletes "LOAM" folder then recreates it. See "mapOptimization" for implementation
 
   # Sensor Settings
@@ -32,7 +32,7 @@ liorf:
   lidarMaxRange: 1000.0                       # default: 1000.0, maximum lidar range to be used
 
   # IMU Settings
-  imuType: 0                                  # 0: 6-axis  1: 9-axis
+  imuType: 1                                  # 0: 6-axis  1: 9-axis
   imuRate: 500.0
   imuAccNoise: 3.9939570888238808e-03
   imuGyrNoise: 1.5636343949698187e-03
@@ -42,14 +42,25 @@ liorf:
   imuRPYWeight: 0.01
 
   # Extrinsics: T_lb (lidar -> imu)
-  extrinsicTrans: [0.0, 0.0, 0.0]
-  extrinsicRot: [-1, 0, 0,
-                  0, 1, 0,
-                  0, 0, -1]
+  # xsens
+  extrinsicTrans: [-0.177619, -0.030163, -0.012297]
+  # livox horizon imu
+  # extrinsicTrans: [-0.228949, 0.024701, -0.499138]
+  # xsens
+  extrinsicRot: [0.999250, 0.014917, 0.035733,
+                 -0.016058, 0.999364, 0.031839,
+                 -0.035236, -0.032389, 0.998854]
+  # Livox Horizon internal IMU
+  #extrinsicRot: [0.977764, 0.049595, -0.203761,
+  #               -0.049693, 0.998754, 0.004641,
+  #               0.203737, 0.005588, 0.979010]
 
   # This parameter is set only when the 9-axis IMU is used, but it must be a high-precision IMU. e.g. MTI-680
-  extrinsicRPY: [0, -1, 0,
-                 1, 0, 0,
+  #extrinsicRPY: [0, -1, 0,
+  #               1, 0, 0,
+  #               0, 0, 1]
+  extrinsicRPY: [1, 0, 0,
+                 0, 1, 0,
                  0, 0, 1]
 
   # voxel filter paprams
